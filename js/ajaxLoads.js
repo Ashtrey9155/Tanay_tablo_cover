@@ -94,7 +94,7 @@ function buildPeople(loads) {
             // console.log("OBJ: " + objaircraft);
             if (ld["freePlaces"] < 0) ld["freePlaces"] = 0;
             let list = $(`<div class="flex-grow-1"></div>`)
-            let head = $(`<div style="padding: 0 1em;" class="d-flex flex-direction-row justify-content-space-between"></div>`);
+            let head = $(`<div style="padding: 0 1em;" class="peopleHead d-flex flex-direction-row justify-content-space-between"></div>`);
             let takeoffNumber = $(`<div>Takeoff №` + ld["number"] + `</div>`);
             let timeView = $(`<div> ` + ld["timeLeft"] + ` min</div></div>`);
             let node = $(`<div class="d-flex width100 justify-content-center flex-grow-1 flex-direction-column"></div>`);
