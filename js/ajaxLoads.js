@@ -111,6 +111,7 @@ function ajaxPeople(boardNumber, leftTime) {
         $("#loading").fadeIn("slow");
       },
     	success: function(data) {
+        // $("#flightSheduleTab").html("");
         $('.errorinfo').addClass("none");
         $("#loading").fadeOut("slow");
     		if (data["people"].length == 0)
