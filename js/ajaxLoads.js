@@ -180,7 +180,8 @@ function ajaxPeople(boardNumber, list) {
         // $('#post').html(msg);
         console.log("error: " + msg);
         // changeTab();
-        ajaxLoads();
+        // ajaxLoads();
+        list.append("<div class=\"no-data\">no data</div>");
       }
   });
   setTimeout(function() {xhr.abort();}, 2000); 
