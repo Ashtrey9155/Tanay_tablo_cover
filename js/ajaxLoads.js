@@ -32,18 +32,17 @@ function ajaxLoads()
       dataType: 'json',
       beforeSend : function() {  
         let html = getTableCellItem("loading");
-        // $("#flightSheduleTab").html(html);
-        // $("#loading").html(html);
-        // $("#loading").fadeIn("slow");
-        // let node = $("<div></div>");
+        $("#flightSheduleTab").html(html);
+        $("#loading").html(html);
+        $("#loading").fadeIn("slow");
         $("#dateInfo font").html(getDate("date"));
         $("#time span").html(getDate("time"));
         $("#timeTopHead span").html(getDate("time"));
       },
     	success: function(data) {
-            // $('.errorinfo').addClass("none");
+        $('.errorinfo').addClass("none");
     		// var tab = $("#flightSheduleTab");
-    		// $("#loading").fadeOut("slow");
+    		$("#loading").fadeOut("slow");
     		if (data["loads"].length == 0)
     		{
                 let html = getTableCellItem("noLoads");
@@ -72,14 +71,14 @@ function ajaxLoads()
     		}       	
     	},
     	error: function() {
-        // $('.errorinfo').removeClass("none");
+        $('.errorinfo').removeClass("none");
         // $('.errorinfo').toggleClass('error');
         var html = getTableCellItem("error");
         $("#flightSheduleTab").html(html);
       }
 
   });
-  // setTimeout(function() {xhr.abort();}, 2000);
+  setTimeout(function() {xhr.abort();}, 2000);
   
 }
 
@@ -117,21 +116,21 @@ function ajaxPeople(boardNumber, list) {
   // let today = new Date();
   let formatDate = getDate();
   var xhr = $.ajax({
-      url: 'ajax/getPeople_2021-08-09_'+boardNumber+'.json?'+Math.random().toString().substr(2, 8),
+      url: 'ajax/getPeople_'+formatDate+'_'+boardNumber+'.json?'+Math.random().toString().substr(2, 8),
       type: 'GET',
       // async: false,
       dataType: 'json',
       cache: false,
       beforeSend : function() {  
-        // let html = getTableCellItem("loading");
+        let html = getTableCellItem("loading");
         // $("#flightSheduleTab").html('');
-        // $("#loading").html(html);
-        // $("#loading").fadeIn("slow");
+        $("#loading").html(html);
+        $("#loading").fadeIn("slow");
       },
     	success: function(data) {
         // $("#flightSheduleTab").html("");
-        // $('.errorinfo').addClass("none");
-        // $("#loading").fadeOut("slow");
+        $('.errorinfo').addClass("none");
+        $("#loading").fadeOut("slow");
         let countPeoples = data["people"].length;
         if (countPeoples === 0) {
           let html = "";
@@ -159,9 +158,9 @@ function ajaxPeople(boardNumber, list) {
     	},
     	error: function(jqXHR, exception) {
         // $('.errorinfo').toggleClass('error');
-        // $('.errorinfo').removeClass("none");
-        // html = getTableCellItem("error");
-        // xhr = null;  
+        $('.errorinfo').removeClass("none");
+        html = getTableCellItem("error");
+        xhr = null;  
         var msg = '';
         if (jqXHR.status === 0) {
             msg = 'Not connect.\n Verify Network.';
@@ -181,10 +180,10 @@ function ajaxPeople(boardNumber, list) {
         // $('#post').html(msg);
         console.log("error: " + msg);
         // changeTab();
-        // ajaxLoads();
+        ajaxLoads();
       }
   });
-  // setTimeout(function() {xhr.abort();}, 2000); 
+  setTimeout(function() {xhr.abort();}, 2000); 
 }
 
 function getWeather()
