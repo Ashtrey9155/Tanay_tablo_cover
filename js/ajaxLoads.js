@@ -35,6 +35,7 @@ function ajaxLoads()
         // $("#flightSheduleTab").html(html);
         $("#loading").html(html);
         $("#loading").fadeIn("slow");
+        // let node = $("<div></div>");
         $("#dateInfo font").html(getDate("date"));
         $("#time span").html(getDate("time"));
         $("#timeTopHead span").html(getDate("time"));
@@ -67,20 +68,21 @@ function ajaxLoads()
           }
 
     			$("#dateInfo div").html("<span class=\"topHead\">" + getDate("date") + " " + "</span><span>" + textCountLoads + "</span>");
-    			for(i = 0; i < countLoads; i++)
+    			for(i = 0; i < 4; i++)
     			{
     				var ld = data["loads"][i];
             var objaircraft = aircraftsObj[normolize(ld["plane"])];
             // console.log("OBJ: " + objaircraft);
     				if (ld["freePlaces"] < 0) ld["freePlaces"] = 0;
-          html += getTableCellItem("info", objaircraft["name"], ld["number"], ld["timeLeft"], objaircraft["overPlaces"], ld["freePlaces"]);
+          ajaxPeople(ld["number"], ld["timeLeft"]);
+          // html += getTableCellItem("info", objaircraft["name"], ld["number"], ld["timeLeft"], objaircraft["overPlaces"], ld["freePlaces"]);
     			}		
     		   	html = html + "</tbody></table>";
              $("#flightSheduleTab").html(html);
     		}       	
     	},
     	error: function() {
-        $('.errorinfo').removeClass("none");
+        // $('.errorinfo').removeClass("none");
         // $('.errorinfo').toggleClass('error');
         var html = getTableCellItem("error");
         $("#flightSheduleTab").html(html);
@@ -93,8 +95,7 @@ function ajaxLoads()
 
 /********************GET LIST PEOPLES IN BOARD**********************/
 
-
-function ajaxPeople(boardNumber) {
+function ajaxPeople(boardNumber, leftTime) {
   // let today = new Date();
   let formatDate = getDate();
   let xhr = $.ajax({
@@ -118,32 +119,30 @@ function ajaxPeople(boardNumber) {
           html += getTableCellItem("noPeoples");
           $("#peopleSheduleTab").html(html);
           xhr = null;  
-          changeTab();
-          ajaxLoads();
+          // changeTab();
+          // ajaxLoads();
           // let timerId = setTimeout(function() {changeTab(); ajaxLoads(); }, peopleLoadTime);
           // console.log("No people in board, timer 15 sec: " + timerId);
     		}
     		else
     		{
           let htmlLeft = "";
-          let htmlRight = "";
+          // let htmlRight = "";
           var countPeoples = data["people"].length;
 
               for(let i = 0; i < countPeoples; i++)
             {
               var ld = data["people"][i];
-              if (i < 10) {
                 htmlLeft += getTableCellItem("peoples",'','','','','', i + 1, ld["name"], ld["task"]);
-              } else {
-                htmlRight += getTableCellItem("peoples",'','','','','', i + 1, ld["name"], ld["task"]);
-              }
             }	
-            htmlRight += "</tbody></table>";
-            if (countPeoples < 11) {
-              $("#peopleSheduleTab").html(`<div class="d-flex width100 justify-content-center flex-grow-1"><font>Takeoff number ${boardNumber}</font></div><div class="flex-grow-1">${htmlLeft}</div>`);
-            } else {
-              $("#peopleSheduleTab").html(`<div class="d-flex width100 justify-content-center flex-grow-1"><font>Takeoff number ${boardNumber}</font></div><div class="flex-grow-1">${htmlLeft}</div><div class="flex-grow-1">${htmlRight}</div>`);
-            }
+            htmlLeft += "</tbody></table>";
+            $("#flightSheduleTab").append(`
+              <div class="d-flex width100 justify-content-center flex-grow-1 flex-direction-column">
+                <div style="padding: 0 1em;" class="d-flex flex-direction-row justify-content-space-between"><div>Takeoff №${boardNumber}</div><div> ${leftTime} min</div></div>
+                <div class="flex-grow-1">${htmlLeft}</div>
+              </div>`);
+            // let list = (`<div class="d-flex width100 justify-content-center flex-grow-1"><font>Takeoff number ${boardNumber}</font></div><div class="flex-grow-1">${htmlLeft}</div>`);
+            // $("#flightSheduleTab").append(list);
         }       	 
     	},
     	error: function() {
@@ -151,8 +150,8 @@ function ajaxPeople(boardNumber) {
         $('.errorinfo').removeClass("none");
         html = getTableCellItem("error");
         xhr = null;  
-        changeTab();
-        ajaxLoads();
+        // changeTab();
+        // ajaxLoads();
       }
   });
   setTimeout(function() {xhr.abort();}, 2000); 
@@ -302,9 +301,9 @@ function displayPeople(boardNumber) {
 }
 
 
-$('.loadsPeo').on('click','', function() {
-  changeTab();
-});
+// $('.loadsPeo').on('click','', function() {
+//   changeTab();
+// });
 
 // $('#peopleSheduleTab').on('click','', function() {
 //   changeTab();

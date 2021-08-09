@@ -24,7 +24,7 @@
   }
 
   .table100percent {
-    flex-flow: row wrap;
+    /* flex-flow: row wrap; */
     flex-direction: row !important;
   }
 }
@@ -58,7 +58,7 @@
 /* Small Devices, Tablets */
 @media only screen and (max-width : 600px) {
   :root {
-    --base-size: 1em;
+    --base-size: 0.6em;
   }
   .topHead {
     display: none !important;
@@ -80,7 +80,7 @@
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
   :root {
-    --base-size: 0.8em;
+    --base-size: 0.6em;
   }
   .topHead {
     display: none !important;
@@ -566,7 +566,7 @@ th, td {
 }
 
 .height100vh{
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .width3_2em {
