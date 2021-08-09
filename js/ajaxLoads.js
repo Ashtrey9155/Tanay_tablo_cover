@@ -33,17 +33,17 @@ function ajaxLoads()
       beforeSend : function() {  
         let html = getTableCellItem("loading");
         // $("#flightSheduleTab").html(html);
-        $("#loading").html(html);
-        $("#loading").fadeIn("slow");
+        // $("#loading").html(html);
+        // $("#loading").fadeIn("slow");
         // let node = $("<div></div>");
         $("#dateInfo font").html(getDate("date"));
         $("#time span").html(getDate("time"));
         $("#timeTopHead span").html(getDate("time"));
       },
     	success: function(data) {
-        $('.errorinfo').addClass("none");
+        // $('.errorinfo').addClass("none");
     		// var tab = $("#flightSheduleTab");
-    		$("#loading").fadeOut("slow");
+    		// $("#loading").fadeOut("slow");
     		if (data["loads"].length == 0)
     		{
           let html = getTableCellItem("noLoads");
@@ -81,16 +81,17 @@ function ajaxLoads()
       }
 
   });
-  setTimeout(function() {xhr.abort();}, 2000);
+  // setTimeout(function() {xhr.abort();}, 2000);
   
 }
 
 
 function buildPeople(loads) {
-    $("#peopleSheduleTab").html("");
-    for(i = 0; i < 4; i++)
+    // $("#flightSheduleTab").html("");
+    let countLoads = (loads.length < 4) ? loads.length : 3;
+    for(i = 0; i < countLoads; i++)
           {
-            var ld = data["loads"][i];
+            var ld = loads[i];
             var objaircraft = aircraftsObj[normolize(ld["plane"])];
             // console.log("OBJ: " + objaircraft);
             if (ld["freePlaces"] < 0) ld["freePlaces"] = 0;
@@ -102,9 +103,8 @@ function buildPeople(loads) {
 
             head.appendTo(node);
             takeoffNumber.appendTo(head);
-            timeview.appendTo(head);
-            node.appendTo($("peopleSheduleTab"));
-            
+            timeView.appendTo(head);
+            node.appendTo($("#flightSheduleTab"));
             ajaxPeople(ld["number"], list);
             // html += getTableCellItem("info", objaircraft["name"], ld["number"], ld["timeLeft"], objaircraft["overPlaces"], ld["freePlaces"]);
     }
@@ -117,38 +117,39 @@ function buildPeople(loads) {
 function ajaxPeople(boardNumber, list) {
   // let today = new Date();
   let formatDate = getDate();
-  let xhr = $.ajax({
-      url: 'ajax/getPeople_'+formatDate+'_'+boardNumber+'.json?'+Math.random().toString().substr(2, 8),
+  var xhr = $.ajax({
+      url: 'ajax/getPeople_2021-08-09_'+boardNumber+'.json?'+Math.random().toString().substr(2, 8),
       type: 'GET',
       // async: false,
       dataType: 'json',
       cache: false,
       beforeSend : function() {  
-        let html = getTableCellItem("loading");
-        $("#peopleSheduleTab").html('');
-        $("#loading").html(html);
-        $("#loading").fadeIn("slow");
+        // let html = getTableCellItem("loading");
+        // $("#flightSheduleTab").html('');
+        // $("#loading").html(html);
+        // $("#loading").fadeIn("slow");
       },
     	success: function(data) {
         // $("#flightSheduleTab").html("");
-        $('.errorinfo').addClass("none");
-        $("#loading").fadeOut("slow");
-    		if (data["people"].length == 0)
-    		{
+        // $('.errorinfo').addClass("none");
+        // $("#loading").fadeOut("slow");
+        let countPeoples = data["people"].length;
+        if (countPeoples === 0) {
           let html = "";
           html += getTableCellItem("noPeoples");
           list.html(html);
           xhr = null;  
-          // changeTab();
-          // ajaxLoads();
-          // let timerId = setTimeout(function() {changeTab(); ajaxLoads(); }, peopleLoadTime);
-          // console.log("No people in board, timer 15 sec: " + timerId);
+          changeTab();
+          ajaxLoads();
+          let timerId = setTimeout(function() {changeTab(); ajaxLoads(); }, peopleLoadTime);
+          console.log("No people in board, timer 15 sec: " + timerId);
     		}
     		else
     		{
+          console.log("success: ");
           let htmlLeft = "";
-          // let htmlRight = "";
-          var countPeoples = data["people"].length;
+        //   // let htmlRight = "";
+          let countPeoples = data["people"].length;
 
             for(let i = 0; i < countPeoples; i++)
             {
@@ -156,19 +157,38 @@ function ajaxPeople(boardNumber, list) {
                 htmlLeft += getTableCellItem("peoples",'','','','','', i + 1, pp["name"], pp["task"]);
             }	
             htmlLeft += "</tbody></table>";
-            list.html(htmlLeft);
+            list.appendTo($("#flightSheduleTab"));
+            list.append(htmlLeft);
         }       	 
     	},
-    	error: function() {
+    	error: function(jqXHR, exception) {
         // $('.errorinfo').toggleClass('error');
-        $('.errorinfo').removeClass("none");
-        html = getTableCellItem("error");
-        xhr = null;  
+        // $('.errorinfo').removeClass("none");
+        // html = getTableCellItem("error");
+        // xhr = null;  
+        var msg = '';
+        if (jqXHR.status === 0) {
+            msg = 'Not connect.\n Verify Network.';
+        } else if (jqXHR.status == 404) {
+            msg = 'Requested page not found. [404]';
+        } else if (jqXHR.status == 500) {
+            msg = 'Internal Server Error [500].';
+        } else if (exception === 'parsererror') {
+            msg = 'Requested JSON parse failed.';
+        } else if (exception === 'timeout') {
+            msg = 'Time out error.';
+        } else if (exception === 'abort') {
+            msg = 'Ajax request aborted.';
+        } else {
+            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+        }
+        // $('#post').html(msg);
+        console.log("error: " + msg);
         // changeTab();
         // ajaxLoads();
       }
   });
-  setTimeout(function() {xhr.abort();}, 2000); 
+  // setTimeout(function() {xhr.abort();}, 2000); 
 }
 
 function getWeather()
