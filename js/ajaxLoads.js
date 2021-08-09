@@ -1,4 +1,4 @@
-let aircraftsObj = {
+  let aircraftsObj = {
   "GreyL410УВПЭ3Siberia": {
     "name": "Grey L-410",
     "overPlaces": 18
@@ -68,17 +68,9 @@ function ajaxLoads()
           }
 
     			$("#dateInfo div").html("<span class=\"topHead\">" + getDate("date") + " " + "</span><span>" + textCountLoads + "</span>");
-    			for(i = 0; i < 4; i++)
-    			{
-    				var ld = data["loads"][i];
-            var objaircraft = aircraftsObj[normolize(ld["plane"])];
-            // console.log("OBJ: " + objaircraft);
-    				if (ld["freePlaces"] < 0) ld["freePlaces"] = 0;
-          ajaxPeople(ld["number"], ld["timeLeft"]);
-          // html += getTableCellItem("info", objaircraft["name"], ld["number"], ld["timeLeft"], objaircraft["overPlaces"], ld["freePlaces"]);
-    			}		
-    		   	html = html + "</tbody></table>";
-             $("#flightSheduleTab").html(html);
+    	    buildPeople(data["loads"]);
+          html = html + "</tbody></table>";
+          $("#flightSheduleTab").html(html);
     		}       	
     	},
     	error: function() {
@@ -93,9 +85,36 @@ function ajaxLoads()
   
 }
 
+
+function buildPeople(loads) {
+    $("#peopleSheduleTab").html("");
+    for(i = 0; i < 4; i++)
+          {
+            var ld = data["loads"][i];
+            var objaircraft = aircraftsObj[normolize(ld["plane"])];
+            // console.log("OBJ: " + objaircraft);
+            if (ld["freePlaces"] < 0) ld["freePlaces"] = 0;
+            let list = $(`<div class="flex-grow-1"></div>`)
+            let head = $(`<div style="padding: 0 1em;" class="d-flex flex-direction-row justify-content-space-between"></div>`);
+            let takeoffNumber = $(`<div>Takeoff №` + ld["number"] + `</div>`);
+            let timeView = $(`<div> ` + ld["timeLeft"] + ` min</div></div>`);
+            let node = $(`<div class="d-flex width100 justify-content-center flex-grow-1 flex-direction-column"></div>`);
+
+            head.appendTo(node);
+            takeoffNumber.appendTo(head);
+            timeview.appendTo(head);
+            node.appendTo($("peopleSheduleTab"));
+            
+            ajaxPeople(ld["number"], list);
+            // html += getTableCellItem("info", objaircraft["name"], ld["number"], ld["timeLeft"], objaircraft["overPlaces"], ld["freePlaces"]);
+    }
+}
+
+
+
 /********************GET LIST PEOPLES IN BOARD**********************/
 
-function ajaxPeople(boardNumber, leftTime) {
+function ajaxPeople(boardNumber, list) {
   // let today = new Date();
   let formatDate = getDate();
   let xhr = $.ajax({
@@ -118,7 +137,7 @@ function ajaxPeople(boardNumber, leftTime) {
     		{
           let html = "";
           html += getTableCellItem("noPeoples");
-          $("#peopleSheduleTab").html(html);
+          list.html(html);
           xhr = null;  
           // changeTab();
           // ajaxLoads();
@@ -131,19 +150,13 @@ function ajaxPeople(boardNumber, leftTime) {
           // let htmlRight = "";
           var countPeoples = data["people"].length;
 
-              for(let i = 0; i < countPeoples; i++)
+            for(let i = 0; i < countPeoples; i++)
             {
-              var ld = data["people"][i];
-                htmlLeft += getTableCellItem("peoples",'','','','','', i + 1, ld["name"], ld["task"]);
+              var pp = data["people"][i];
+                htmlLeft += getTableCellItem("peoples",'','','','','', i + 1, pp["name"], pp["task"]);
             }	
             htmlLeft += "</tbody></table>";
-            $("#flightSheduleTab").append(`
-              <div class="d-flex width100 justify-content-center flex-grow-1 flex-direction-column">
-                <div style="padding: 0 1em;" class="d-flex flex-direction-row justify-content-space-between"><div>Takeoff №${boardNumber}</div><div> ${leftTime} min</div></div>
-                <div class="flex-grow-1">${htmlLeft}</div>
-              </div>`);
-            // let list = (`<div class="d-flex width100 justify-content-center flex-grow-1"><font>Takeoff number ${boardNumber}</font></div><div class="flex-grow-1">${htmlLeft}</div>`);
-            // $("#flightSheduleTab").append(list);
+            list.html(htmlLeft);
         }       	 
     	},
     	error: function() {
