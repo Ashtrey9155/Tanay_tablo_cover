@@ -17,6 +17,14 @@
   display:none;
 }
 
+.peopleHead {
+  padding: 0.3em 0.2em !important;
+  background-color: #0379a8;
+  color: #e8f2f8;
+  border: 1px solid #90d5f4
+}
+
+
 /* Medium Devices, Desktops */
 @media (orientation: landscape) {
   .boardItem {
@@ -301,7 +309,7 @@ th, td {
 
 /* .column1 {
   /* width: 27%;
-  padding-left: 0 !important; */
+  padding-left: 0 !important;
 } */
 
 /* .column2 {
