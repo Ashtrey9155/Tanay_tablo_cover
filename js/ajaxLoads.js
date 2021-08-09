@@ -41,36 +41,34 @@ function ajaxLoads()
         $("#timeTopHead span").html(getDate("time"));
       },
     	success: function(data) {
-        // $('.errorinfo').addClass("none");
+            // $('.errorinfo').addClass("none");
     		// var tab = $("#flightSheduleTab");
     		// $("#loading").fadeOut("slow");
     		if (data["loads"].length == 0)
     		{
-          let html = getTableCellItem("noLoads");
-          $("#flightSheduleTab").html(html);
-          $("#flightSheduleTab td").fadeIn("slow");
+                let html = getTableCellItem("noLoads");
+                $("#flightSheduleTab").html(html);
+                $("#flightSheduleTab td").fadeIn("slow");
     		}
     		else
     		{
     			var html = "";
     			var sortedObj = sortObj(data["loads"]);
-          var i;
-          var countLoads = data["loads"].length;
-          // var countLoads = sortedObj.length;
+                var i;
+                var countLoads = data["loads"].length;
+                // var countLoads = sortedObj.length;
 
-          var textCountLoads;
-          switch (true) {
-            case countLoads ===1:
-              textCountLoads = countLoads + " flight";
-              break;
-            default:
-              textCountLoads = countLoads + " flights";
-          }
+                var textCountLoads;
+                switch (true) {
+                    case countLoads ===1:
+                    textCountLoads = countLoads + " flight";
+                    break;
+                default:
+                    textCountLoads = countLoads + " flights";
+                }
 
     			$("#dateInfo div").html("<span class=\"topHead\">" + getDate("date") + " " + "</span><span>" + textCountLoads + "</span>");
-    	    buildPeople(data["loads"]);
-          html = html + "</tbody></table>";
-          $("#flightSheduleTab").html(html);
+    	        buildPeople(sortedObj);
     		}       	
     	},
     	error: function() {
@@ -87,9 +85,9 @@ function ajaxLoads()
 
 
 function buildPeople(loads) {
-    // $("#flightSheduleTab").html("");
-    let countLoads = (loads.length < 4) ? loads.length : 3;
-    for(i = 0; i < countLoads; i++)
+    $("#flightSheduleTab").html("");
+    let countLoads = (loads.length < 4) ? loads.length : 4;
+    for(let i = 0; i < countLoads; i++)
           {
             var ld = loads[i];
             var objaircraft = aircraftsObj[normolize(ld["plane"])];
@@ -104,6 +102,7 @@ function buildPeople(loads) {
             head.appendTo(node);
             takeoffNumber.appendTo(head);
             timeView.appendTo(head);
+            list.appendTo(node);
             node.appendTo($("#flightSheduleTab"));
             ajaxPeople(ld["number"], list);
             // html += getTableCellItem("info", objaircraft["name"], ld["number"], ld["timeLeft"], objaircraft["overPlaces"], ld["freePlaces"]);
@@ -151,13 +150,10 @@ function ajaxPeople(boardNumber, list) {
         //   // let htmlRight = "";
           let countPeoples = data["people"].length;
 
-            for(let i = 0; i < countPeoples; i++)
-            {
-              var pp = data["people"][i];
-                htmlLeft += getTableCellItem("peoples",'','','','','', i + 1, pp["name"], pp["task"]);
-            }	
-            htmlLeft += "</tbody></table>";
-            list.appendTo($("#flightSheduleTab"));
+            for(let i = 0; i < countPeoples; i++) {
+                var pp = data["people"][i];
+                htmlLeft += getTableCellItem("peoples", '', '', '', '', '', i + 1, pp["name"], pp["task"]);
+            }
             list.append(htmlLeft);
         }       	 
     	},
