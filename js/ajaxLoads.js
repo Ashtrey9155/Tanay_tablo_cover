@@ -39,9 +39,11 @@ class TabloMondialOnline {
       }
     }(this));
     this.ajaxLoads();
+    this.loadMessage();
     this.intervalID = setInterval(function(that) {
       return function() {
         that.ajaxLoads(); 
+        that.loadMessage();
       }
     }(this), 15000);
   }
@@ -50,6 +52,23 @@ class TabloMondialOnline {
     $(".loadsTab").toggle();
     $(".loadsPeo").toggle();
   }*/
+
+  loadMessage() {
+    $.ajax({
+      url: '/ajax/message.json' ,
+      type:'json',
+      datatype: 'get',
+      success: function(that){
+        return function(data) {
+          that.showMessage(data);
+        }
+      }(this)
+  });
+  }
+
+  showMessage(data) {
+    $("#infoMessage").html(data.msg);
+  }
 
   ajaxLoads()
   {
@@ -137,7 +156,6 @@ class TabloMondialOnline {
       }(this), 1000);
     }
   }
-
 
   buildPeople(loads) {
     $("#flightSheduleTab").html("");

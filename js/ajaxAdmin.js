@@ -10,7 +10,7 @@ $('#flightSheduleTab').on('click','.sendBtn', function() {
         console.log("Данные переданы: " + message + "; unix time: " + utc_timestamp);
       },
       success: function(data) {
-        if (data.status === 200) {
+        if (data.result === 200) {
           console.log("Данные переданы без ошибки");
         }
       },
