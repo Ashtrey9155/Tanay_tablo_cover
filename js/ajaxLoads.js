@@ -55,7 +55,7 @@ class TabloMondialOnline {
 
   loadMessage() {
     $.ajax({
-      url: '/ajax/message.json' ,
+      url: '/ajax/message.json'+Math.random().toString().substr(2, 8),
       type:'get',
       datatype: 'json',
       success: function(that){
