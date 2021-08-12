@@ -68,7 +68,7 @@ class TabloMondialOnline {
 
   showMessage(data) {
     $("#infoMessage").html(data.msg);
-    $("#infoMessage").removeClass(none);
+    // $("#infoMessage").removeClass(none);
   }
 
   ajaxLoads()
@@ -159,7 +159,7 @@ class TabloMondialOnline {
   }
 
   buildPeople(loads) {
-    $("#flightSheduleTab").html("");
+    $("#flightSheduleTab").html(""); // perhaps delete it
     let countLoads = (loads.length < 4) ? loads.length : 4;
     this.peopleNodes = [];
     this.peopleNodesCount = countLoads;
