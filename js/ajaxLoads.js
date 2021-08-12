@@ -56,8 +56,8 @@ class TabloMondialOnline {
   loadMessage() {
     $.ajax({
       url: '/ajax/message.json' ,
-      type:'json',
-      datatype: 'get',
+      type:'get',
+      datatype: 'json',
       success: function(that){
         return function(data) {
           that.showMessage(data);
