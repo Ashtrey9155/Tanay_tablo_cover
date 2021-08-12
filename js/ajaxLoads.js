@@ -68,6 +68,7 @@ class TabloMondialOnline {
 
   showMessage(data) {
     $("#infoMessage").html(data.msg);
+    $("#infoMessage").removeClass(none);
   }
 
   ajaxLoads()
@@ -99,7 +100,7 @@ class TabloMondialOnline {
 
   onBeforeAjaxLoads() {
       let html = this.getTableCellItem("loading");
-      $("#flightSheduleTab").html(html);
+      // $("#flightSheduleTab").html(html);
       $("#loading").html(html);
       $("#loading").fadeIn("slow");
       $("#dateInfo font").html(this.getDate("date"));
