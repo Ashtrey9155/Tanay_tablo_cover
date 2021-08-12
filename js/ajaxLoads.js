@@ -67,7 +67,17 @@ class TabloMondialOnline {
   }
 
   showMessage(data) {
-    $("#infoMessage").html(data.msg);
+    let onlineAddress = "See this board at http://mondial2020.online";
+    if(data.msg.length === 0 ) {
+      $("#infoMessage").html(onlineAddress);
+      $(".infoMessage").removeClass('bgColor-yellow');
+      $(".infoMessage").addClass('bgColor-light-green');
+    } else {
+      $(".infoMessage").removeClass('bgColor-light-green');
+      $(".infoMessage").addClass('bgColor-yellow');
+      $("#infoMessage").html(data.msg);
+    }
+    
     // $("#infoMessage").removeClass(none);
   }
 
@@ -159,7 +169,7 @@ class TabloMondialOnline {
   }
 
   buildPeople(loads) {
-    $("#flightSheduleTab").html(""); // perhaps delete it
+    // perhaps delete it
     let countLoads = (loads.length < 4) ? loads.length : 4;
     this.peopleNodes = [];
     this.peopleNodesCount = countLoads;
@@ -252,6 +262,7 @@ class TabloMondialOnline {
     if (this.peopleNodesCount == 0) {
       let peopleContainers = "";
       this.peopleNodes.map((node) => { peopleContainers += node.prop('outerHTML');});
+      // $("#flightSheduleTab").html(""); 
       $("#flightSheduleTab").html(peopleContainers);
     }
     $("#loading").fadeOut("slow");

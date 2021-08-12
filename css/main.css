@@ -9,6 +9,7 @@
   --color-grey: grey;
   --color-red: red;
   --color-yellow: rgb(255, 196, 0);
+  --color-light-green: rgb(148, 247, 46);
   --dot-color: #000;
   --mondialGreen: #82bb31;
 }
@@ -591,6 +592,10 @@ th, td {
 
 .bgColor-yellow{
   background-color: var(--color-yellow);
+}
+
+.bgColor-light-green{
+  background-color: var(--color-light-green);
 }
 
 .font-size-5em{
