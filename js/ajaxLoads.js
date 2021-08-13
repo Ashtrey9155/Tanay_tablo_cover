@@ -127,6 +127,7 @@ class TabloMondialOnline {
     {
             let html = this.getTableCellItem("noLoads");
             $("#flightSheduleTab").html(html);
+            $("#dateInfo div").html("<span class=\"topHead\">" + this.getDate("date") + " " + "</span><span>0 flights</span>");
             $("#flightSheduleTab td").fadeIn("slow");
     }
     else
