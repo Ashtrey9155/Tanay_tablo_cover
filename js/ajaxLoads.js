@@ -68,11 +68,21 @@ class TabloMondialOnline {
 
   showMessage(data) {
     let onlineAddress = "See this board at http://mondial2020.online";
+    let dateLeft = data.until;
+    let today = new Date;
+    let utc_timestamp = (Date.UTC( today.getUTCFullYear(),
+        today.getUTCMonth(),
+        today.getUTCDate(),
+        hours + 7,
+        minutes,
+        0, 0) / 1000);
+    
     if(data.msg.length === 0 ) {
       $("#infoMessage").html(onlineAddress);
       $(".infoMessage").removeClass('bgColor-yellow');
       $(".infoMessage").addClass('bgColor-light-green');
-    } else {
+    } 
+    if(data.msg.length !== 0 && dateLeft <= utc_timestamp) {
       $(".infoMessage").removeClass('bgColor-light-green');
       $(".infoMessage").addClass('bgColor-yellow');
       $("#infoMessage").html(data.msg);
