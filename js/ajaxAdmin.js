@@ -6,9 +6,9 @@ $('#flightSheduleTab').on('click','.sendBtn', function() {
     let utc_timestamp = (Date.UTC( today.getUTCFullYear(),
         today.getUTCMonth(),
         today.getUTCDate(),
-        7 + hours,
+        hours,
         minutes,
-        0, 0) / 1000);
+        0, 0) / 1000) - 7*3600;
     $.ajax({
       url: '/admin/message?msg=' + message + '&until=' + utc_timestamp,
       type: 'GET',
@@ -30,7 +30,7 @@ $('#flightSheduleTab').on('click','.sendBtn', function() {
       finally: function() {
         setTimeout(function(){
           $(".infoMessage").html("");
-        }, 3000)
+        }, 3000);
       }
     });
   

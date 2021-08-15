@@ -70,7 +70,7 @@ class TabloMondialOnline {
     let onlineAddress = "See this board at http://mondial2020.online";
     let dateLeft = data.until;
     let today = new Date;
-    let timeStamp = today.getTime();
+    let timeStamp = today.getTime() / 1000;
     
     if(data.msg.length === 0 || dateLeft < timeStamp) {
       $("#infoMessage").html(onlineAddress);
