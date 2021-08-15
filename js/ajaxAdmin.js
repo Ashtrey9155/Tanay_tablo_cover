@@ -27,7 +27,7 @@ $('#flightSheduleTab').on('click','.sendBtn', function() {
         $(".infoMessage").html("Сообщение передано с ошибкой");
         console.log("error данные не переданы");
       },
-      finally: function() {
+      complete: function() {
         setTimeout(function(){
           $(".infoMessage").html("");
         }, 3000);
