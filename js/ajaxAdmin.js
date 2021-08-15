@@ -6,7 +6,7 @@ $('#flightSheduleTab').on('click','.sendBtn', function() {
     let utc_timestamp = (Date.UTC( today.getUTCFullYear(),
         today.getUTCMonth(),
         today.getUTCDate(),
-        hours + 7,
+        7 + hours,
         minutes,
         0, 0) / 1000);
     $.ajax({
