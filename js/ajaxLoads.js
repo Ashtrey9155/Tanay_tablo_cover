@@ -59,7 +59,7 @@ class TabloMondialOnline {
 
   loadMessage() {
     $.ajax({
-      url: '/ajax/message.json?'+Math.random().toString().substr(2, 8),
+      url: '/ajax/message.json?rnd='+Math.random().toString().substr(2, 8),
       type:'get',
       datatype: 'json',
       success: function(that){
@@ -94,7 +94,7 @@ class TabloMondialOnline {
   {
     // console.log("countErrors: " + countErrors);
     var xhr = $.ajax({
-      url: 'ajax/getLoads.json?'+Math.random().toString().substr(2, 8),
+      url: 'ajax/getLoads.json?rnd='+Math.random().toString().substr(2, 8),
       // async: false,
       type: 'GET',
       dataType: 'json',
@@ -209,7 +209,7 @@ class TabloMondialOnline {
     // let today = new Date();
     let formatDate = this.getDate();
     var xhr = $.ajax({
-        url: 'ajax/getPeople_'+formatDate+'_'+boardNumber+'.json?'+Math.random().toString().substr(2, 8),
+        url: 'ajax/getPeople_'+formatDate+'_'+boardNumber+'.json?rnd='+Math.random().toString().substr(2, 8),
         type: 'GET',
         // async: false,
         dataType: 'json',
