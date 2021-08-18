@@ -714,13 +714,13 @@ th, td {
 }
 
 .container-background {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 480px;
   height: 360px;
 
-  background: center / contain no-repeat url("../images/bgMondial.png");
+  background: center no-repeat url("../images/bgMondial.png");
   opacity: 0.5;
   background-size: 50%;
 }
